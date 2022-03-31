@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+
+  <div class="wrapper"></div>
+ <input type="text" >
+ <button>Отправить</button>
+  
+  
+</body>
+<script>
+let movieDB = {
+  movies: [],
+}
+const inputValue = document.querySelector('input');
+const btn = document.querySelector('button');
+let i = 0;
+btn.addEventListener('click', ()=> { 
+  let inputLength = inputValue.value.length;
+  let inputText = inputValue.value;
+  if(inputLength > 3) {
+   }
+  movieDB.movies[i] = inputText.slice(0, 3) + '\u2026';
+  i++;
+  console.log(movieDB.movies);
+});
+// const wrap = document.querySelector('.wrapper');
+// const inputValue = document.querySelector('input');
+// const btn = document.querySelector('button');
+// let i = 0;
+// btn.addEventListener('click', ()=> { 
+//   const div = document.createElement('div');
+//   div.classList.add('black');
+//   wrap.append(div);
+//   div.innerHTML = inputValue.value;
+// });
+
+</script>
+
+</html>
