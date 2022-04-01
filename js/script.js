@@ -35,34 +35,101 @@ bg.style.maxWidth  = '100%';
 
 
 // формируем базу фильмов из JS и сортируем
-
-
-
 const movieDB = {
   movies: [
     "Одержимость",
       "Логан2",
       "Лига справедливости",
-      "Ла-ла лэнд-2",
-      "Скотт Пилигрим против..."
+      "Ла-ла лэнд-1",
+      "Скотт Пилигрим против...",
+      
   ]
 };
-movieDB.movies.sort();
-//  console.log(movieDB.movies);
-const promoList = document.querySelectorAll('.promo__interactive-item');
-promoList.forEach((item, i) => { 
-  //Сначала удаляем содержимое из HTML
-  item.innerHTML =  '';
-  item.innerHTML = `${i + 1 } `+movieDB.movies[i];
+// movieDB.movies.sort();
+ const promoList = document.querySelector('.promo__interactive-list');
  
-  //или так
-  //  item.insertAdjacentHTML('afterbegin', `${i+1} `); 
+ 
+ movieDB.movies.forEach((item, i) => { 
+   promoList.innerHTML += `<li class="promo__interactive-item"> ${i + 1 } ${item}<div class="delete"></div>
+   </li>`;
+   // console.log(item);
+  });
+
+
+
+// Добавляем фильмы из формы ввода в массив с фильмами
+const inputValue = document.querySelector('.adding__input');
+const btn = document.querySelector('button');
+const checkBox = document.querySelector('[data-checkBox]');
+
+
+// let i = 0;
+btn.addEventListener('click', (e)=> {
+  e.preventDefault(); // отключаем перезагрузку страницы
+  let inputLength = inputValue.value.length;
+  let inputText = inputValue.value;
+  if(inputLength > 5) {
+   }
+   // этот прием удаляет и заменяет предыдущие значения, не подойдет
+  // movieDB.movies[i] = inputText.slice(0, 5) + '\u2026';
+// push вставляет сразу в конец, а надо вставлять сразу в нужное место по алфавиту
+
+ movieDB.movies.push(inputText.slice(0, 5) + '\u2026');
+  // i++;
+  movieDB.movies.sort();
+  console.log(movieDB);
+  promoList.innerHTML = '';  // очищаем после каждого ввода все фильмы и заново прогоняем цикл и берем данные из массива
+  
+  movieDB.movies.forEach((item, i) => { 
+    promoList.innerHTML += `<li class="promo__interactive-item"> ${i + 1 } ${item}<div class="delete"></div>
+    </li>`;
+    // console.log(item);
+   
+   });
+ 
+   
+
+});
+
+// movieDB.movies.sort();
+// const promoList = document.querySelector('.promo__interactive-list');
+// promoList.innerHTML = '';
+// movieDB.movies.forEach((item, i) => { 
+//   promoList.innerHTML += `<li class="promo__interactive-item"> ${i + 1 } ${item}<div class="delete"></div>
+//   </li>`;
+//   // console.log(item);
+//  });
+
+// const promoList = document.querySelectorAll('.promo__interactive-item');
+// promoList.forEach((item, i) => { 
+//   //Сначала удаляем содержимое из HTML
+//   item.innerHTML =  '';
+//   // item.innerHTML = `${i + 1 } `+movieDB.movies[i];
+//   // Но лучше так, так как позже надо будет класс delete использовать
+//   item.innerHTML = `<li class="promo__interactive-item"> ${i + 1 } ${movieDB.movies[i]}<div class="delete"></div>
+// </li>`;
+//   //или так
+//   //  item.insertAdjacentHTML('afterbegin', `${i+1} `); 
+//  });
+
+
+//  console.log(movieDB.movies);
+
+// Удаляем фильмы из базы по клику на корзине
+const trash = document.querySelectorAll('.delete');
+trash.forEach((item, i) => {
+    item.addEventListener('click', ()=> { 
+      trash[i].parentNode.remove(); // удалем весь родительский узел у корзины
+    });
+  
  });
 
- //У Ивана по другому. см. в файле
- 
-window.addEventListener('click', function stop(){
-console.log('Привет!'); 
-//удаляем обработчик после клика
-window.removeEventListener('click', stop);
-});
+   //Проверяем чекбокс на галочку
+   checkBox.addEventListener('change', ()=> { 
+    if(checkBox.checked) {
+      console.log('Да');
+    } else {
+      console.log('Нет');
+    }
+    
+  });
