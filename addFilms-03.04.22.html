@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>addFilms - урок Иван №33</title>
+  <!-- Упрощенная версия -->
+
+  <style>
+    * {
+      margin:0px 0px 0px 0px;
+	padding:0px 0px 0px 0px;
+	text-decoration:none;
+	font-family:l,Arial,Helvetica,sans-serif;
+  list-style: none;
+	box-sizing: border-box;
+  list-style: none;
+    }
+    
+    .wrapper {
+      display: flex;
+      gap: 50px;
+      margin: 20px 0px 0px 20px;
+      
+}
+.movieList {
+  width: 200px;
+ /* background-color: rgb(154, 154, 154); */
+}
+.movieItem {
+  text-align: center;
+  margin: 0px 0px 20px 0px;
+  display: flex;
+  gap: 20PX;
+}
+.delete {
+  width: 20px;
+  height: 20px;
+  background: url('icons/trash.png');
+  background-size: cover;
+  cursor: pointer;
+  
+}
+.addMovie {
+}
+.input-add {
+}
+
+  </style>
+</head>
+
+<body>
+  <div class="wrapper">
+    <div class="movieList">
+      <ul class="movieItem">Один
+        <div class="delete"></div>
+      </ul>
+      <ul class="movieItem">Два
+        <div class="delete"></div>
+      </ul>
+      <ul class="movieItem">Три
+        <div class="delete"></div>
+      </ul>
+      <ul class="movieItem">Четыре
+        <div class="delete"></div>
+      </ul>
+      <ul class="movieItem">Пять
+        <div class="delete"></div>
+      </ul>
+   </div>
+
+   <form class="addMovie">
+     <input type="text" class="input-add">
+     <input type="checkbox">
+     <button>Добавить</button>
+   </form>
+
+  </div>
+  <script>
+const movieList = document.querySelector('.movieList');
+const formAdd = document.querySelector('form.addMovie');
+const inputFilm = document.querySelector('.input-add');
+const checkBox = document.querySelector('[type="checkbox"]');
+
+
+
+let movieDB = {
+  arr: [
+  'ааа-1',
+  'ббб',  
+  'ввв',
+  'ггг',
+  'ддд',
+
+  ]
+};
+
+//создаем ф. сортировки
+let arrSort = () => {
+  movieDB.arr.sort();
+};
+
+// Меняем HTML на данные из массива
+function createMovieDB(films, parent) {
+  parent.innerHTML = '';
+  arrSort();
+
+movieDB.arr.forEach((item, i) => { 
+  parent.innerHTML += `<ul class="movieItem">${i+1} ${item}<div class="delete"></div>
+      </ul>`; 
+ });
+ //Удаляем фильмы - разместить именно внутри функ.
+// document.querySelectorAll('.delete').forEach((item,i) => { // или так
+  const delFilm = document.querySelectorAll('.delete');
+delFilm.forEach((item, i) => { 
+  item.addEventListener('click', ()=> {
+    movieDB.arr.splice(i,1);  
+   item.parentElement.remove();
+   createMovieDB(movieDB.arr, movieList ); // рекурсия - освежаем данные внури массива
+  
+  });
+ });
+
+
+}
+createMovieDB(movieDB.arr, movieList );
+
+
+// Добавляем фил. в массив и HTML
+formAdd.addEventListener('submit', (e)=> {
+ e.preventDefault();
+let newFilm = inputFilm.value;
+let favorite = checkBox.checked;
+
+if(newFilm) {
+
+  if(newFilm.length >3) {
+    newFilm = `${newFilm.substring(0,3)}...`;
+  }
+  if(favorite) {
+  console.log('Любимый фильм');
+}
+
+movieDB.arr.push(newFilm);
+arrSort();
+createMovieDB(movieDB.arr, movieList );
+
+}
+
+
+});
+
+
+ </script>
+
+</body>
+
+</html>
